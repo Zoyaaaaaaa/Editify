@@ -1,0 +1,397 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Editify</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+        <style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+/* Reseting */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+
+.container{
+    transform-style: preserve-3d;
+}
+
+.container .box{
+    position: relative;
+    width: 300px;
+    height: 300px;
+    margin: 20px;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+.container .box .body{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: 0.9s ease;
+}
+
+
+
+.container .box .body .imgContainer{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+}
+
+.container .box .body .imgContainer img{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.container .box .body .content{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #333;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+    transform: rotateY(180deg);
+}
+
+.container .box:hover .body{
+    transform: rotateY(180deg);
+}
+
+.container .box .body .content div{
+    transform-style: preserve-3d;
+    padding: 20px;
+    background: linear-gradient(45deg, #6e515c,#3a3a35);
+    transform: translateZ(100px);
+}
+
+.container .box .body .content div h3{
+    letter-spacing: 1px;
+}
+.dropdown-item {
+    color: #333; /* Text color */
+    background-color: #fff; /* Background color */
+    border: 1px solid #ccc; /* Border color */
+}
+
+.dropdown-item:hover {
+    background-color: #f8f9fa; /* Background color on hover */
+}
+
+.dropdown-item:focus {
+    background-color: #e9ecef; /* Background color on focus */
+    color: #000; /* Text color on focus */
+    outline: none; /* Remove focus outline */
+}
+.btn-outline-light-purple {
+    color: #e6e8eb; /* Text color */
+    background-color: #333c59;
+    border-color: #6c757d; /* Border color */
+    font-size: medium;
+}
+
+.btn-outline-light-purple:hover {
+    color: #fff; /* Text color on hover */
+    background-color: #252c44; /* Background color on hover */
+    border-color: #6c757d; /* Border color on hover */
+}
+
+
+        </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+           
+            <a class="navbar-brand" href="#"><img src="https://th.bing.com/th/id/R.9a515c63ffbfc0402fc1d851204e780e?rik=wh8J8UfH7TqfmA&riu=http%3a%2f%2fclipart-library.com%2fimages%2fATbrnzoAc.png&ehk=kZmdbVqBGxJts0frHw3qHLR7MKqRQH1ZyBqnHqUkzng%3d&risl=&pid=ImgRaw&r=0" width="120px">Editify</a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#aboutus">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features">Features</a>
+                    </li>
+                    <!-- <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            Dropdown
+                        </a>
+                         <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul> 
+                    </li> -->
+                </ul>
+                <div>
+                    <!-- <button class="btn btn-outline-success" type="submit">Login</button>
+                    <button class="btn btn-outline-success" type="submit">Signup</button> -->
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="container mt-3">
+                {% for category, message in messages %}
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ message | safe }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <!-- Main Content -->
+    <div class="container mt-5">
+      <div class="row justify-content-center">
+          <div class="col-md-8">
+              <h1 class="text-center mb-4">Let's Edit it!</h1>
+              <form action="/edit" method="POST" enctype="multipart/form-data">
+                  <div class="mb-3">
+                      <label for="formFileSm" class="form-label">Upload Image</label>
+                      <input class="form-control form-control-sm" name="file" id="formFileSm" type="file">
+                  </div>
+                  <div class="mb-3">
+                      <label for="exampleDataList" class="form-label">Select Conversion Format</label>
+                      <input type="hidden" name="option" id="conversionOption">
+                      <input class="form-control" id="exampleDataListInput" placeholder="Type to search..." data-bs-toggle="dropdown"
+                          aria-expanded="false">
+                      <ul class="dropdown-menu" aria-labelledby="exampleDataListInput" id="exampleDataListDropdown">
+                          <li><button class="dropdown-item" type="button" onclick="setConversionOption('blur')">Blur</button></li>
+                          <li><button class="dropdown-item" type="button" onclick="setConversionOption('resize')">Resize</button></li>
+                          <li><button class="dropdown-item" type="button" onclick="setConversionOption('cgray')">Convert to cgray</button></li>
+                          <li><button class="dropdown-item" type="button" onclick="setConversionOption('webp')">Convert to webp</button></li>
+                          <button class="dropdown-item" type="button" onclick="setConversionOption('flip')">Flip Image</button></li>
+                          <button class="dropdown-item" type="button" onclick="setConversionOption('threshold')">Threshold Image</button></li>
+                          <li><button class="dropdown-item" type="button" onclick="setConversionOption('canny')">Convert to canny</button></li>
+                          <!-- <li><button class="dropdown-item" type="button" onclick="setConversionOption('pdf')">Convert to pdf</button></li> -->
+                      </ul>
+                  </div>
+                  <button class="btn btn-outline-light-purple 3xl mt-3 float-end rounded-circle" type="submit">Submit</button>
+
+
+              </form>
+          </div>
+      </div>
+  </div>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+        <!-- About 3 - Bootstrap Brain Component -->
+<section class="py-3 py-md-5">
+    <div class="container mb-4 mb-md-5">
+      <div class="row justify-content-md-center">
+        <div class="col-12 col-md-10 col-xxl-8">
+        </div>
+      </div>
+    </div>
+   
+    <div class="container overflow-hidden"id="aboutus">
+      <div class="row gy-2 gy-md-0 justify-content-xxl-center">
+        <div class="col-12 order-md-1 col-md-8 col-xxl-6">
+          <div class="text-center text-md-start">
+            <h2 class="display-3 fw-bold lh-1">About Us</h2>
+            <hr class="w-25 mx-auto ms-md-0 mb-4 text-secondary">
+            <p>At Editify, we leverage cutting-edge technologies to deliver a seamless and powerful image editing platform. Our project is built using OpenCV and Flask, two robust frameworks renowned for their efficiency and versatility. OpenCV provides us with a comprehensive library of computer vision and image processing algorithms, enabling us to implement advanced editing features such as grayscale conversion, edge detection, resizing, blurring, and more. Flask, on the other hand, serves as the backbone of our web application, offering a lightweight and flexible framework for building dynamic web services. Together, these technologies form the foundation of Editify, empowering users to unleash their creativity and transform their images with ease.
+
+            </p>
+          </div>
+        </div>
+        <div class="col-12 order-md-0 col-md-4 col-xxl-4">
+          <img src="https://freepngimg.com/thumb/camera/83552-logo-photography-camera-symbol-download-hd-png.png" width="300px">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <br>
+  <br>
+  <h2 class="display-3 fw-bold lh-1 text-center" id="features">Features</h2>
+  <div class="container d-flex align-items-center justify-content-center flex-wrap">
+    <div class="box">
+        <div class="body">
+            <div class="imgContainer">
+                <img src="https://cdn.openart.ai/uploads/image_MlxdWfmN_1690701329589_512.webp" alt="">
+            </div>
+            <div class="content d-flex flex-column align-items-center justify-content-center">
+                <div>
+                    <h3 class="text-white fs-5">Blur</h3>
+                    <p class="fs-6 text-white">Applies a Gaussian blur to the image, reducing noise and details while creating a smoother appearance, often used for image enhancement and preprocessing.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="box">
+        <div class="body">
+            <div class="imgContainer">
+                <img src=https://th.bing.com/th/id/OIP.eDpSlefCNV6Wh8CLwkViwQHaE8?rs=1&pid=ImgDetMain" alt="">
+            </div>
+            <div class="content d-flex flex-column align-items-center justify-content-center">
+                <div>
+                    <h3 class="text-white fs-5">Gray Scale</h3>
+                    <p class="fs-6 text-white">Converts the image to grayscale, simplifying color information while retaining essential details for various image processing tasks.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box">
+        <div class="body">
+            <div class="imgContainer">
+                <img src="https://www.freedomvc.com/wp-content/uploads/2021/09/Toronto3_Canny.jpg" alt="">
+            </div>
+            <div class="content d-flex flex-column align-items-center justify-content-center">
+                <div>
+                    <h3 class="text-white fs-5">Canny</h3>
+                    <p class="fs-6 text-white">Detects edges in an image using a multi-stage algorithm, preserving important edge features while filtering out noise.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<br>
+<br>
+    <footer class="bg-body-tertiary text-center">
+        <!-- Grid container -->
+        <div class="container p-4">
+          <!-- Section: Images -->
+          <section class="">
+            <div class="row">
+              <div class="col-lg-2 col-md-12 mb-4 mb-md-0">
+                <div data-mdb-ripple-init
+                  class="bg-image hover-overlay shadow-1-strong rounded"
+                  data-ripple-color="light"
+                >
+                  <img src="https://mdbcdn.b-cdn.net/img/new/fluid/city/113.webp" class="w-100" />
+                  <a href="#!">
+                    <div class="mask" style="background-color: rgba(251, 251, 251, 0.2);"></div>
+                  </a>
+                </div>
+              </div>
+              <div class="col-lg-2 col-md-12 mb-4 mb-md-0">
+                <div data-mdb-ripple-init
+                  class="bg-image hover-overlay shadow-1-strong rounded"
+                  data-ripple-color="light"
+                >
+                  <img src="https://mdbcdn.b-cdn.net/img/new/fluid/city/111.webp" class="w-100" />
+                  <a href="#!">
+                    <div class="mask" style="background-color: rgba(251, 251, 251, 0.2);"></div>
+                  </a>
+                </div>
+              </div>
+              <div class="col-lg-2 col-md-12 mb-4 mb-md-0">
+                <div data-mdb-ripple-init
+                  class="bg-image hover-overlay shadow-1-strong rounded"
+                  data-ripple-color="light"
+                >
+                  <img src="https://mdbcdn.b-cdn.net/img/new/fluid/city/112.webp" class="w-100" />
+                  <a href="#!">
+                    <div class="mask" style="background-color: rgba(251, 251, 251, 0.2);"></div>
+                  </a>
+                </div>
+              </div>
+              <div class="col-lg-2 col-md-12 mb-4 mb-md-0">
+                <div data-mdb-ripple-init
+                  class="bg-image hover-overlay shadow-1-strong rounded"
+                  data-ripple-color="light"
+                >
+                  <img src="https://mdbcdn.b-cdn.net/img/new/fluid/city/114.webp" class="w-100" />
+                  <a href="#!">
+                    <div class="mask" style="background-color: rgba(251, 251, 251, 0.2);"></div>
+                  </a>
+                </div>
+              </div>
+              <div class="col-lg-2 col-md-12 mb-4 mb-md-0">
+                <div data-mdb-ripple-init
+                  class="bg-image hover-overlay shadow-1-strong rounded"
+                  data-ripple-color="light"
+                >
+                  <img src="https://mdbcdn.b-cdn.net/img/new/fluid/city/115.webp" class="w-100" />
+                  <a href="#!">
+                    <div class="mask" style="background-color: rgba(251, 251, 251, 0.2);"></div>
+                  </a>
+                </div>
+              </div>
+              <div class="col-lg-2 col-md-12 mb-4 mb-md-0">
+                <div data-mdb-ripple-init
+                  class="bg-image hover-overlay shadow-1-strong rounded"
+                  data-ripple-color="light"
+                >
+                  <img src="https://mdbcdn.b-cdn.net/img/new/fluid/city/116.webp" class="w-100" />
+                  <a href="#!">
+                    <div class="mask" style="background-color: rgba(251, 251, 251, 0.2);"></div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </section>
+          
+        </div>
+        <!-- Grid container -->
+      
+        <!-- Copyright -->
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.05);">
+          © 2024 Copyright:
+          <a class="text-body" href="https://github.com/Zoyaaaaaaa">Editify</a>
+        </div>
+        <!-- Copyright -->
+      </footer>
+      
+
+    <!-- JavaScript -->
+    <script>
+        function setConversionOption(option) {
+            document.getElementById('exampleDataListInput').value = option;
+            document.getElementById('conversionOption').value = option; // Set the hidden input value
+        }
+    </script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+</body>
+</html>
