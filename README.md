@@ -1,6 +1,4 @@
-Here’s an enhanced and visually appealing version of the README for your project "Editify":
 
----
 
 # ✨ **Editify** ✨
 
